@@ -12,7 +12,22 @@ export default class HelloWorldApp extends Component {
     state = {
         locOff: true,
         emailNotVerified: true,
+        isVisibleEmailModal: true,
+        isVisibleLocModal: true,
     };
+
+    checkModal(){
+        if(this.state.emailNotVerified === 1){
+            this.state.isVisibleEmailModal = 1;
+        }else{
+            this.state.isVisibbleEmailModal = 0;
+            if(this.state.locOff === 1){
+                this.state.isVisibleLocModal = 1;
+            }else{
+                this.state.isVisibleLocModal = 0;
+            }
+        }
+    }
 
     toggleLocOff(visible){
         this.setState({
@@ -69,7 +84,7 @@ export default class HelloWorldApp extends Component {
         }
     }
 
-    // AHYA RR
+
     switchCaseModal(caseNum){
         switch(caseNum){
             case 1: {
@@ -146,91 +161,33 @@ export default class HelloWorldApp extends Component {
                     </View>
                 </Modal>
 
-                {/* <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.sampleLoc}
-                    onRequestClose={() => {
-                        alert('Modal has been closed.');
-                    }}>
-                    <View style={{ marginTop: 22 }}>
-                        <View>
-                            <Text>Sample Turn Location Services On!</Text>
-
-                            <TouchableHighlight
-                                onPress={() => {
-                                    this.toggleLocOff(!this.state.sampleLoc);
-                                }}>
-                                <Text>Click me to hide</Text>
-                            </TouchableHighlight>
-                        </View>
-                    </View>
-                </Modal>
-
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.sampleEmail}
-                    onRequestClose={() => {
-                        alert('Modal has been closed.');
-                    }}>
-                    <View style={{ marginTop: 22 }}>
-                        <View>
-                            <Text>Sample Email not verified</Text>
-
-                            <TouchableHighlight
-                                onPress={() => {
-                                    this.toggleEmailOff(!this.state.sampleEmail);
-                                }}>
-                                <Text>Click me to hide</Text>
-                            </TouchableHighlight>
-                        </View>
-                    </View>
-                </Modal> */}
-
                 <TouchableHighlight style={styles.modalBtn}
                     onPress={() => {
-                        this.switchCaseModal(1);
+                        this.checkModal();
                     }}>
                     <Text>Turn on location modal and turn on email not verified</Text>
                 </TouchableHighlight>
 
                 <TouchableHighlight style={styles.modalBtn}
                     onPress={() => {
-                        this.switchCaseModal(2);
+                        this.checkModal();
                     }}>
                     <Text>Turn location modal on and turn off email not verified</Text>
                 </TouchableHighlight>
 
                 <TouchableHighlight style={styles.modalBtn}
                     onPress={() => {
-                        this.switchCaseModal(3);
+                        this.checkModal();
                     }}>
                     <Text>Turn off location modal and turn on email verification</Text>
                 </TouchableHighlight>
 
                 <TouchableHighlight style={styles.modalBtn}
                     onPress={() => {
-                        this.switchCaseModal(4);
+                        this.checkModal();
                     }}>
                     <Text>Turn off location modal and turn off email verification</Text>
                 </TouchableHighlight>
-
-                {/* <TouchableHighlight
-                    onPress={() => {
-                        // this.toggleEmailOff(!this.state.emailNotVerified);
-                        this.toggleLocOff(!this.state.sampleLoc);
-                    }}>
-                    <Text>Turn Location Off. </Text>
-                </TouchableHighlight>
-
-                <TouchableHighlight
-                    onPress={() => {
-                        // this.toggleEmailOff(!this.state.emailNotVerified);
-                        this.toggleEmailOff(!this.state.sampleEmail);
-                    }}>
-                    <Text>Unset email. </Text>
-                </TouchableHighlight> */}
 
             </View>
         );
