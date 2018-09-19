@@ -1,77 +1,49 @@
 import React, { Component } from 'react';
-import { Modal, TouchableHighlight, Text, View } from 'react-native';
+import { 
+    TouchableHighlight, 
+    Text, 
+    View
+ } from 'react-native';
 import { name as appName } from './app.json';
+import { Modal, emailModal, locModal } from './components';
 
 export default class HelloWorldApp extends Component {
     state = {
-        modalVisibility: false,
-        modalId: 0,
+        modalVisibility: true,
+        isVisibleEmailModal: true,
+        isVisibleLocModal: true,
+        notVerified: true,
+        locOFf: true,
     };
+
+    checkModal(){
+        if (this.state.notVerified === true) {
+            this.state.isVisibleEmailModal = true;
+        } else {
+            this.state.isVisibleEmailModal = false;
+            if (this.state.locOFf === true){
+                this.state.isVisibleLocModal = true;
+            }else{
+                this.state.isVisibleLocModal = false;
+            }
+        }
+    }
 
     setModalVisible(visibility){
         this.setState({
-            modalVisibility: visibility
+            modalVisibility: visibility,
         });
     }
 
-    SwitchModalContent(modalId, visibility){
+    setEmailVisible(visibility){
         this.setState({
-            modalVisibility: visibility
+            isVisibleEmailModal: visibility,
         });
-        switch(modalId){
-            default: {
-                return (
-                    <Modal
-                        animationType="slide"
-                        transparent={false}
-                        visible={this.state.modalVisibility}
-                        onRequestClose={() => {
-                            alert('Modal has been closed.');
-                        }}>
-                        <View style={{ marginTop: 22 }}>
-                            <View>
-                                <Text>default to {appName} inside a modal!</Text>
-
-                                <TouchableHighlight
-                                    onPress={() => {
-                                        this.setModalVisible(!this.state.modalVisibility);
-                                    }}>
-                                    <Text>Hide Modal</Text>
-                                </TouchableHighlight>
-                            </View>
-                        </View>
-                    </Modal>
-                )
-            }
-            case 0: {
-                return (
-                    <Modal
-                        animationType="slide"
-                        transparent={false}
-                        visible={this.state.modalVisibility}
-                        onRequestClose={() => {
-                            alert('Modal has been closed.');
-                        }}>
-                        <View style={{ marginTop: 22 }}>
-                            <View>
-                                <Text>1 to {appName} inside a modal!</Text>
-
-                                <TouchableHighlight
-                                    onPress={() => {
-                                        this.setModalVisible(!this.state.modalVisibility);
-                                    }}>
-                                    <Text>Hide Modal</Text>
-                                </TouchableHighlight>
-                            </View>
-                        </View>
-                    </Modal>
-                )
-            }
-            case 1: {
-                return (
-                )
-            }
-        }
+    }
+    setLocVisible(visibility){
+        this.setState({
+            isVisibleLocModal: visibility,
+        });
     }
 
     render() {
@@ -81,46 +53,21 @@ export default class HelloWorldApp extends Component {
 
                 <TouchableHighlight
                     onPress={() => {
-                        this.SwitchModalContent('default', true);
+                        this.setEmailVisible(!this.state.isVisibleEmailModal)
                     }}>
-                    <Text>Show default Modal</Text>
+                    <Text>Show email not verified.</Text>
                 </TouchableHighlight>
 
                 <TouchableHighlight
                     onPress={() => {
-                        this.SwitchModalContent(0, true);
+                        this.setLocVisible(!this.state.isVisibleLocModal)
                     }}>
-                    <Text>Show first Modal</Text>
+                    <Text>Show location services not turned on.</Text>
                 </TouchableHighlight>
 
-                <TouchableHighlight
-                    onPress={() => {
-                        this.SwitchModalContent(1, true);
-                    }}>
-                    <Text>Show Second Modal</Text>
-                </TouchableHighlight>
-
-                <Modal
-                    animationType="slide"
-                    transparent={false}
-                    visible={this.state.modalVisibility}
-                    onRequestClose={() => {
-                        alert('Modal has been closed.');
-                    }}>
-                    <View style={{ marginTop: 22 }}>
-                        <View>
-                            <Text>2 to {appName} inside a modal!</Text>
-
-                            <TouchableHighlight
-                                onPress={() => {
-                                    this.setModalVisible(!this.state.modalVisibility);
-                                }}>
-                                <Text>Hide Modal</Text>
-                            </TouchableHighlight>
-                        </View>
-                    </View>
-                </Modal>
-
+                <Modal>This is a normal modal.</Modal>
+                <emailModal>Email is not verified</emailModal>
+                <locModal>Location services is turned off.</locModal>
             </View>
         );
     }
